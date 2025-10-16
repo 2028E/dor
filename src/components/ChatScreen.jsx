@@ -288,6 +288,18 @@ return (
         onBlock={handleBlockContact}
         onClose={() => setShowContactActions(false)}
         showToast={showToast}
+        onViewOnline={() => {
+          setShowContactActions(false)
+          setShowOnlineUsers(true)
+        }}
+        onFavorite={() => {
+          setShowContactActions(false)
+          setShowFavoriteContact(true)
+        }}
+        onClearMessages={() => {
+          setShowContactActions(false)
+          setShowClearMessages(true)
+        }}
       />
     )}
 
