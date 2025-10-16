@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import './FloatingMenu.css'
 
-const FloatingMenu = ({ contactName, position, onClose, onRemove, onViewOnline, onFavorite, onBlock }) => {
+const FloatingMenu = ({ contactName, position, onClose, onRemove, onViewOnline, onFavorite, onBlock, onSquareMenu, onDotsMenu }) => {
   const [isVisible, setIsVisible] = useState(false)
   const [clickedButton, setClickedButton] = useState(null)
 
@@ -20,11 +20,17 @@ const FloatingMenu = ({ contactName, position, onClose, onRemove, onViewOnline, 
     }, 300)
   }
 
-  const handleIconClick = (iconName) => {
+  const handleIconClick = (iconName, action) => {
     setClickedButton(iconName)
     setTimeout(() => {
-      setClickedButton(null)
-    }, 600)
+      setIsVisible(false)
+      setTimeout(() => {
+        if (action) {
+          action()
+        }
+        onClose()
+      }, 200)
+    }, 300)
   }
 
   return (
@@ -71,7 +77,7 @@ const FloatingMenu = ({ contactName, position, onClose, onRemove, onViewOnline, 
         <div className="floating-menu-buttons">
           <button
             className={`icon-button square ${clickedButton === 'square' ? 'clicked' : ''}`}
-            onClick={() => handleIconClick('square')}
+            onClick={() => handleIconClick('square', onSquareMenu)}
           >
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
               <rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" strokeWidth="2" fill="none"/>
@@ -80,7 +86,7 @@ const FloatingMenu = ({ contactName, position, onClose, onRemove, onViewOnline, 
 
           <button
             className={`icon-button dots ${clickedButton === 'dots' ? 'clicked' : ''}`}
-            onClick={() => handleIconClick('dots')}
+            onClick={() => handleIconClick('dots', onDotsMenu)}
           >
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
               <circle cx="6" cy="12" r="2" fill="currentColor"/>
